@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sp_how_entries">
+        <item>Личный зачёт</item>
+        <item>Зачёт по классу</item>
+    </string-array>
+</resources>

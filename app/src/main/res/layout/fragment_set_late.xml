@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetLateFragment">
+
+
+    <FrameLayout
+        android:id="@+id/containersetlate"
+        android:layout_width="match_parent"
+        android:layout_height="675dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <SearchView
+                android:id="@+id/svSetLate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:filterTouchesWhenObscured="true"
+                android:fitsSystemWindows="true"
+                android:focusable="auto"
+                android:gravity="start"
+                android:inputType="textPersonName"
+                android:padding="3dp"
+                android:queryHint=" Фамилия Имя Класс"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecV_SetLate"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/svSetLate"
+                tools:listitem="@layout/item_setlate" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+</FrameLayout>

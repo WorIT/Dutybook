@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "299976953209",
+    "firebase_url": "https://dutybook-7fbd1.firebaseio.com",
+    "project_id": "dutybook-7fbd1",
+    "storage_bucket": "dutybook-7fbd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299976953209:android:01a3ed558c3fbf6671b3a8",
+        "android_client_info": {
+          "package_name": "com.example.dutybook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299976953209-ol0nh70m81dunc2f0cjgn2ch3ihp0b86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqAGm5z4M7Kqku95ajWhL9os8l0Fryun8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299976953209-ol0nh70m81dunc2f0cjgn2ch3ihp0b86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

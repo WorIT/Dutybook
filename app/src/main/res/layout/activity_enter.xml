@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <Button
+        android:id="@+id/btn_fogotpassword"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:fontFamily="@font/roboto_mono_bold"
+        android:insetTop="0dp"
+        android:text="Забыли пароль?"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/chek_remind"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/enter_password_et"
+        app:layout_constraintTop_toBottomOf="@+id/btn_enter_user" />
+
+    <Button
+        android:id="@+id/btn_enter_registration"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:backgroundTint="#FFFFFF"
+        android:fontFamily="@font/roboto_mono_bold"
+        android:insetTop="0dp"
+        android:text="Зарегестрироваться"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/btn_enter_user"
+        app:layout_constraintStart_toStartOf="@+id/btn_enter_user"
+        app:layout_constraintTop_toBottomOf="@+id/btn_enter_user" />
+
+    <Button
+        android:id="@+id/btn_enter_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:fontFamily="@font/roboto_mono_bold"
+        android:text="Войти"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/enter_password_et"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/enter_password_et"
+        app:layout_constraintTop_toBottomOf="@+id/enter_password_et" />
+
+    <EditText
+        android:id="@+id/enter_login_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="144dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_mono_light"
+        android:hint="example@gmail.com"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/enter_password_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_mono_light"
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/enter_login_et"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/enter_login_et"
+        app:layout_constraintTop_toBottomOf="@+id/enter_login_et" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_mono_bold"
+        android:text="Пользователь"
+        app:layout_constraintBottom_toTopOf="@+id/enter_login_et"
+        app:layout_constraintStart_toStartOf="@+id/enter_login_et" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_mono_bold"
+        android:text="Пароль"
+        app:layout_constraintBottom_toTopOf="@+id/enter_password_et"
+        app:layout_constraintStart_toStartOf="@+id/enter_password_et" />
+
+    <CheckBox
+        android:id="@+id/chek_remind"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:button="@null"
+        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+        android:fontFamily="@font/roboto_mono_bold"
+        android:text="Запомнить"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/AppTheme"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/enter_password_et"
+        app:layout_constraintTop_toBottomOf="@+id/enter_password_et" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
