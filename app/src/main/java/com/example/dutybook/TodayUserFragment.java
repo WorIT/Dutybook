@@ -28,6 +28,7 @@ import com.google.firebase.database.annotations.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -86,10 +87,10 @@ public class TodayUserFragment extends Fragment {
                         tv_nameuser.setText(personnow.getName() + " " + personnow.getGrade());
                         tv_numdelayhistory.setText(Integer.toString(personnowNumdelay));
                         ArrayList<String> date = new ArrayList<>(personnow.delays.keySet());
-                        ArrayList<String> times = new ArrayList<>(personnow.delays.values());
+                        date = sortdate(date);
                         ArrayList<HistoryLate> HistoryLateList = new ArrayList<>();
                         for (int i = 0; i < date.size() ; i++) {
-                            HistoryLate h = new HistoryLate(date.get(i),times.get(i));
+                            HistoryLate h = new HistoryLate(date.get(i),personnow.delays.get(date.get(i)));
                             HistoryLateList.add(h);
                         }
                         HistoryLateList = movedot(HistoryLateList);
@@ -188,5 +189,36 @@ public class TodayUserFragment extends Fragment {
 
         return view;
 
+    }
+
+    public ArrayList<String> sortdate(ArrayList<String> date){
+        for (int i = 0; i < date.size(); i++) {
+            for (int j = 0; j < date.size(); j++) {
+                if(Integer.parseInt(date.get(i).substring(6,10)) > Integer.parseInt(date.get(j).substring(6,10))){
+                    String q = date.get(i);
+                    date.set(i,date.get(j));
+                    date.set(j,q);
+                }
+            }
+        }
+        for (int i = 0; i < date.size(); i++) {
+            for (int j = 0; j < date.size(); j++) {
+                if(Integer.parseInt(date.get(i).substring(3,5)) > Integer.parseInt(date.get(j).substring(3,5)) && Integer.parseInt(date.get(i).substring(6,10)) >= Integer.parseInt(date.get(j).substring(6,10)) && Integer.parseInt(date.get(i).substring(6,10)) >= Integer.parseInt(date.get(j).substring(6,10))  ){
+                    String q = date.get(i);
+                    date.set(i,date.get(j));
+                    date.set(j,q);
+                }
+            }
+        }
+        for (int i = 0; i < date.size(); i++) {
+            for (int j = 0; j < date.size(); j++) {
+                if(Integer.parseInt(date.get(i).substring(0,2)) > Integer.parseInt(date.get(j).substring(0,2)) && Integer.parseInt(date.get(i).substring(3,5)) >= Integer.parseInt(date.get(j).substring(3,5)) && Integer.parseInt(date.get(i).substring(6,10)) >= Integer.parseInt(date.get(j).substring(6,10))   ){
+                    String q = date.get(i);
+                    date.set(i,date.get(j));
+                    date.set(j,q);
+                }
+            }
+        }
+        return date;
     }
 }
