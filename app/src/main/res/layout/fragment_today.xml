@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Дежурный класс 10-5"
+            android:text="Дежурный класс ..."
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,8 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_ratbartoDuty"
             app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="@+id/tv_ratbartoDuty"
-            app:layout_constraintTop_toBottomOf="@+id/tv_ratbartoDuty" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_ratbartoDuty"
+            android:theme="@style/MyRatingBar"/>
 
         <TextView
             android:id="@+id/tv_ratbartoDuty"

@@ -1,6 +1,7 @@
 package com.example.dutybook;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -171,6 +172,7 @@ public class TodayUserFragment extends Fragment {
                         double newnumvoice = numvoice + 1;
                         myRef.child("dutyclasses").child(dutygrade).child("rating").setValue(newrating);
                         myRef.child("dutyclasses").child(dutygrade).child("numvoice").setValue(newnumvoice);
+
                         rb_setuser.setIsIndicator(true);
                         Toast toast = Toast.makeText(getActivity(),
                                 "Вы успешно оценили дежурство", Toast.LENGTH_SHORT);

@@ -75,17 +75,10 @@ class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateViewHold
                 if (!personArrayList.get(position).getDatelast().equals(today)){
                     HashMap<String,String> temp = personArrayList.get(position).delays;
                     temp.put(today_hashmap,timenow);
-
-                    HashMap<String,String> k = new HashMap<>();
-                    k.put("21,02,2020","9:05");
-                    k.put("22,02,2020","9:03");
-                    k.put("23,02,2020","9:07");
-                    k.put("24,02,2020","9:05");
-
                     Toast.makeText(SetLateAdapter.this.context,"Опоздание зафиксированно",Toast.LENGTH_SHORT).show();
                     myRef.child("people").child(personArrayList.get(position).getName()).child("numdelay").setValue(personArrayList.get(position).getNumdelay() + 1);
                     myRef.child("people").child(personArrayList.get(position).getName()).child("datelast").setValue(today);
-                    myRef.child("people").child(personArrayList.get(position).getName()).child("delays").setValue(k);
+                    myRef.child("people").child(personArrayList.get(position).getName()).child("delays").setValue(temp);
                 }else Toast.makeText(context, "Опоздание этого ученика уже зафиксированно", Toast.LENGTH_SHORT).show();
             }
         });
