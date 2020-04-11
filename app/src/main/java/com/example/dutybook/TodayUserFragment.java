@@ -35,18 +35,18 @@ import java.util.HashMap;
 
 
 public class TodayUserFragment extends Fragment {
-    RatingBar rb_setuser;
-    RatingBar rb_now;
-    TextView tv_dutyclass;
-    static private RecyclerView rv;
-    static VoiceUser v;
+    private RatingBar rb_setuser;
+    private RatingBar rb_now;
+    private TextView tv_dutyclass;
+    private static RecyclerView rv;
+    private static VoiceUser v;
     private String dutygrade = "";
     private double dutyratingnow;
     private double numvoice;
     private double sumrating;
-    TextView tv_numdelayhistory;
+    private TextView tv_numdelayhistory;
     private DatabaseReference myRef;
-    TextView tv_nameuser;
+    private TextView tv_nameuser;
     private Person personnow;
     private Integer personnowNumdelay;
     private HashMap<String,String> temp;
@@ -81,6 +81,7 @@ public class TodayUserFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 personnow = dataSnapshot.getValue(Person.class);
                 myRef.child("people").child(personnow.getName()).addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         personnow = dataSnapshot.getValue(Person.class);
@@ -94,7 +95,7 @@ public class TodayUserFragment extends Fragment {
                             HistoryLate h = new HistoryLate(date.get(i),personnow.delays.get(date.get(i)));
                             HistoryLateList.add(h);
                         }
-                        HistoryLateList = movedot(HistoryLateList);
+                        movedot(HistoryLateList);
                         adapter.setHistoryLate(HistoryLateList);
                         adapter.notifyDataSetChanged();
                     }

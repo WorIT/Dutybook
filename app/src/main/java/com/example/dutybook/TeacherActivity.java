@@ -12,7 +12,6 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 
 public class TeacherActivity extends AppCompatActivity {
 

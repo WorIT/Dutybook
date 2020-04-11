@@ -25,12 +25,12 @@ import java.util.ArrayList;
 
 public class TodayFragment extends Fragment {
     private DatabaseReference myRef;
-    FirebaseListAdapter mAdapter;
+    private FirebaseListAdapter mAdapter;
     private RatingBar rb;
     private TextView  tv_today_dutyclass;
     static private ArrayList<String> dutygrade = new ArrayList<>();
-    static double dutyrating;
-    static ListView lv;
+    private static double dutyrating;
+    private ListView lv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

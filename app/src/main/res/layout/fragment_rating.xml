@@ -18,6 +18,7 @@
             android:layout_marginTop="28dp"
             android:layout_marginEnd="196dp"
             android:entries="@array/sp_how_entries"
+            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,6 +28,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="56dp"
             android:entries="@array/sp_grade_entries"
+            android:spinnerMode="dropdown"
             app:layout_constraintStart_toEndOf="@+id/sp_how"
             app:layout_constraintTop_toTopOf="@+id/sp_how" />
 

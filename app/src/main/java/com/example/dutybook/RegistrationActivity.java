@@ -63,7 +63,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     }
             );
-        }else                    Toast.makeText(RegistrationActivity.this, "Учентая запись для " + regPerson.getName() + " " + regPerson.getGrade() + "уже была  создана", Toast.LENGTH_SHORT).show();
+        }else                    Toast.makeText(RegistrationActivity.this, "Учентая запись для " + regPerson.getName() + " " + regPerson.getGrade() + " уже была  создана", Toast.LENGTH_SHORT).show();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_mono_bold"
         android:text="Введите ваш адрес электронной почты"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"

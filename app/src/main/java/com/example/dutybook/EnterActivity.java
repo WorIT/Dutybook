@@ -30,9 +30,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class EnterActivity extends AppCompatActivity {
-    Button btn_enter_duty;
-    Button btn_enter_registration;
-    Button btn_fogot;
+    private Button btn_enter_duty;
+    private Button btn_enter_registration;
+    private Button btn_fogot;
     static boolean isDuty;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
@@ -40,7 +40,7 @@ public class EnterActivity extends AppCompatActivity {
     private EditText enter_password_et;
     private EditText enter_login_et;
     private ArrayList<String> gradelist = new ArrayList<>();
-    static CheckBox chek_remid;
+    private CheckBox chek_remid;
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_LOGIN = "Login";
     public static final String APP_PREFERENCES_PASSWORD = "Password";
