@@ -25,17 +25,17 @@ import com.google.firebase.database.annotations.Nullable;
 import java.util.ArrayList;
 
 public class SetLateFragment extends Fragment {
-        static private RecyclerView rv;
-        static private SearchView sv;
+        private RecyclerView rv;
+
         private FirebaseAuth mAuth;
-    static  ArrayList<Person> NotLatePeople = new ArrayList<>();
+        private ArrayList<Person> NotLatePeople = new ArrayList<>();
         private DatabaseReference myRef;
-        static SetLateAdapter adapter;
+        private SetLateAdapter adapter;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_set_late, container, false);
+            SearchView sv;
             sv = view.findViewById(R.id.svSetLate);
-
             rv = view.findViewById(R.id.RecV_SetLate);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
             rv.setLayoutManager(layoutManager);
