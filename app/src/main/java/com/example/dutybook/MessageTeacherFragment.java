@@ -27,11 +27,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MessageTeacherFragment extends Fragment {
-    Button btn_send;
-    EditText messageteacher;
+    private Button btn_send;
+    private EditText messageteacher;
     private String message;
     private DatabaseReference myRef;
-    FirebaseListAdapter mAdapter;
     static ArrayList<String> comments = new ArrayList<>();
     static private String dutygrade;
     static ListView lv;

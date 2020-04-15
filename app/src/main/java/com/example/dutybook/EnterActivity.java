@@ -90,8 +90,8 @@ public class EnterActivity extends AppCompatActivity {
     public void signin(final String email , final String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
             boolean r = isDutynow("10-5");
-            if (email.contains("admin")) {
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            if (email.toLowerCase().contains("admin239")) {
+                mAuth.signInWithEmailAndPassword(email + "@gmail.com", password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {

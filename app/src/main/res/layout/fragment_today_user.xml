@@ -43,14 +43,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_active_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="164dp"
             android:fontFamily="@font/roboto_mono_light"
             android:text="Оцените дежурство"
             app:layout_constraintEnd_toEndOf="@+id/rb_now"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="@+id/rb_now"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,12 +58,12 @@
             android:id="@+id/rb_setuser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:layout_constraintEnd_toEndOf="@+id/textView"
-            app:layout_constraintHorizontal_bias="0.44"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:theme="@style/MyRatingBar"/>
+            android:layout_marginTop="12dp"
+            android:theme="@style/MyRatingBar"
+            app:layout_constraintEnd_toEndOf="@+id/tv_active_rb"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="@+id/tv_active_rb"
+            app:layout_constraintTop_toBottomOf="@+id/tv_active_rb" />
 
         <TextView
             android:id="@+id/tv_nameuser"
@@ -80,24 +80,26 @@
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_mono_light"
             android:text="Зафиксировано опозданий"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@+id/tv_nameuser"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_nameuser" />
+            app:layout_constraintTop_toBottomOf="@+id/rb_setuser" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_historylate"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10"
-            app:layout_constraintVertical_bias="0.49"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nameuser"
             tools:listitem="@layout/item_historylate" />
 
         <TextView

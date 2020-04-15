@@ -48,7 +48,9 @@ public class TodayUserFragment extends Fragment {
     private DatabaseReference myRef;
     private TextView tv_nameuser;
     private Person personnow;
+    private TextView tw_rb;
     private Integer personnowNumdelay;
+    private String dutygradelastonline = "";
     private HashMap<String,String> temp;
     private ArrayList<HistoryLate> lateHistory = new ArrayList<>();
 
@@ -69,6 +71,7 @@ public class TodayUserFragment extends Fragment {
         tv_nameuser = view.findViewById(R.id.tv_nameuser);
         tv_numdelayhistory = view.findViewById(R.id.tv_numdelayHistory);
         tv_dutyclass = view.findViewById(R.id.tv_dutyclass);
+        tw_rb = view.findViewById(R.id.tv_active_rb);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         rb_setuser = view.findViewById(R.id.rb_setuser);
         final HistoryLateAdapter adapter = new HistoryLateAdapter (lateHistory);
@@ -130,6 +133,22 @@ public class TodayUserFragment extends Fragment {
                         dutygrade = d.grade;
                         sumrating = d.rating;
                         numvoice = d.numvoice;
+
+                        dutygradelastonline = d.lastonline;
+                        Date dateNow = new Date();
+                        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                        String today = formatForDateNow.format(dateNow);
+
+                        if (!dutygradelastonline.equals(today)) {
+                            myRef.child("dutyclasses").child(dutygrade).child("rating").setValue((double) 0);
+                            myRef.child("dutyclasses").child(dutygrade).child("numvoice").setValue(0);
+                            myRef.child("dutyclasses").child(dutygrade).child("lastonline").setValue(today);
+                            ArrayList<String> comments = new ArrayList<>();
+                            comments.add("Сообщений нет");
+                            myRef.child("dutyclasses").child(dutygrade).child("comments").setValue(comments);
+                        }
+
+
                         tv_dutyclass.setText("Сегодня дежурит " + dutygrade + " класс");
                         dutyratingnow = (double)d.rating / d.numvoice;
                         rb_now.setRating((float)dutyratingnow);
@@ -152,6 +171,7 @@ public class TodayUserFragment extends Fragment {
                 String today = formatForDateNow.format(dateNow);
                 if (v.datelast.equals(today)) {
                     rb_setuser.setRating(v.ratinglast);
+                    tw_rb.setText("Вы успешно оценили дежурство");
                     rb_setuser.setIsIndicator(true);
                 }
             }
@@ -175,6 +195,8 @@ public class TodayUserFragment extends Fragment {
                         myRef.child("dutyclasses").child(dutygrade).child("numvoice").setValue(newnumvoice);
 
                         rb_setuser.setIsIndicator(true);
+                        tw_rb.setText("Вы успешно оценили дежурство");
+
                         Toast toast = Toast.makeText(getActivity(),
                                 "Вы успешно оценили дежурство", Toast.LENGTH_SHORT);
                         toast.show();
@@ -185,6 +207,8 @@ public class TodayUserFragment extends Fragment {
                 }
             }
         });
+
+
 
 
 
