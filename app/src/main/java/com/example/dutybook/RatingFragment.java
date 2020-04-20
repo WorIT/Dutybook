@@ -1,6 +1,5 @@
 package com.example.dutybook;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,18 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.SearchView;
 import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 
 public class RatingFragment extends Fragment {
@@ -51,6 +51,97 @@ public class RatingFragment extends Fragment {
         spinneradapterhow.setDropDownViewResource(R.layout.spin_close);
         sp_how.setAdapter(spinneradapterhow);
 
+                sp_grade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        String[] items = getResources().getStringArray(R.array.sp_grade_entries);
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            ArrayList<Person> filterlist = new ArrayList<>();
+                            for (int i = 0; i < People.size(); i++) {
+                                if (People.get(i).getGrade().toLowerCase().contains(items[position]) && !filterlist.contains(People.get(i))) {
+                                    filterlist.add(People.get(i));
+                                }
+                            }
+                            sortrating(filterlist);
+                            adapter.setPersonArrayList(filterlist);
+                            adapter.notifyDataSetChanged();
+                        }else{
+                            sortrating(People);
+                            adapter.setPersonArrayList(People);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                sp_how.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    String[] items = getResources().getStringArray(R.array.sp_how_entries);
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(items[position].equals("Зачёт по классу")) {
+                            String[] itemsgrade = getResources().getStringArray(R.array.s);
+                            class Grade {
+                                private int numdelays;
+                                private String grades;
+
+                                public int up(){
+                                    this.setNumdelays(this.getNumdelays() + 1);
+                                    return this.getNumdelays();
+                                }
+                                public int getNumdelays() {
+                                    return numdelays;
+                                }
+
+                                public void setNumdelays(int numdelays) {
+                                    this.numdelays = numdelays;
+                                }
+
+                                public String getGrades() {
+                                    return grades;
+                                }
+
+                                public void setGrades(String grades) {
+                                    this.grades = grades;
+                                }
+
+                                public Grade(int numdelays, String grades) {
+                                    this.numdelays = numdelays;
+                                    this.grades = grades;
+                                }
+                            }
+
+
+
+
+                            adapter.setPersonArrayList(people);
+                            adapter.notifyDataSetChanged();
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+
         myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("people").addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,4 +163,20 @@ public class RatingFragment extends Fragment {
                 return view;
 
 }
+
+
+
+    public void sortrating(ArrayList<Person> p){
+        for (int i = 0; i < p.size(); i++) {
+            for (int j = 0; j < p.size() ; j++) {
+                if(p.get(i).getNumdelay() > p.get(j).getNumdelay()){
+                    Person temp = p.get(i);
+                    p.set(i,p.get(j));
+                    p.set(j,temp);
+                }
+            }
+
+        }
+
+    }
         }

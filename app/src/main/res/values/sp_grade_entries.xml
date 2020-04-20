@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="sp_grade_entries">
+        <item>все</item>
         <item>9</item>
         <item>9-1</item>
         <item>9-2</item>

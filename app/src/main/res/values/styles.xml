@@ -14,7 +14,7 @@
 
     <style name="BottomNavigation.TextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textStyle">normal</item>
-        <item name="android:fontFamily">@font/roboto_mono_light</item>
+        <item name="android:fontFamily">@font/rubik_light</item>
     </style>
 
 

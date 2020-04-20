@@ -30,8 +30,6 @@ public class SettingsActivity extends AppCompatActivity {
                 SharedPreferences settings = getApplicationContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
                 settings.edit().clear().apply();
                 Intent intent = new Intent(SettingsActivity.this,EnterActivity.class);
-                Toast.makeText(SettingsActivity.this,"Скоро увидимся)",Toast.LENGTH_SHORT).show();
-
                 startActivity(intent);
             }
         });
