@@ -269,6 +269,7 @@ public class EnterActivity extends AppCompatActivity {
         btn_fogot=findViewById(R.id.btn_fogotpassword);
         enter_password_et=findViewById(R.id.enter_password_et);
         progressBar =  findViewById(R.id.progressBar);
+
 final View contextView=findViewById(R.id.btn_fogotpassword);
 
 class TryAgainListener implements View.OnClickListener {

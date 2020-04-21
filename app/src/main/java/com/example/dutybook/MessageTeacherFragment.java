@@ -33,7 +33,8 @@ public class MessageTeacherFragment extends Fragment {
     private DatabaseReference myRef;
     static ArrayList<String> comments = new ArrayList<>();
     static private String dutygrade;
-    static ListView lv;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -2,7 +2,7 @@
 <resources>
     <string-array name="sp_how_entries">
         <item>Личный зачёт</item>
-        <item>Зачёт по классу</item>
+        <item>Среди классов</item>
         <item>Рейтинг дежурств</item>
     </string-array>
 </resources>

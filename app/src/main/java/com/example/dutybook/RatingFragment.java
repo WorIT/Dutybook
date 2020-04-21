@@ -21,8 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.Objects;
 
 
 public class RatingFragment extends Fragment {
@@ -31,6 +30,7 @@ public class RatingFragment extends Fragment {
     private DatabaseReference myRef;
     private Spinner sp_how;
     private Spinner sp_grade;
+    private ArrayList<Person> gradep;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class RatingFragment extends Fragment {
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
 
-        ArrayAdapter<CharSequence> spinneradaptergrade = ArrayAdapter.createFromResource(getActivity(), R.array.sp_grade_entries ,R.layout.spin_close);
+        ArrayAdapter<CharSequence> spinneradaptergrade = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()), R.array.sp_grade_entries ,R.layout.spin_close);
         spinneradaptergrade.setDropDownViewResource(R.layout.spin_close);
         sp_grade.setAdapter(spinneradaptergrade);
 
@@ -83,7 +83,9 @@ public class RatingFragment extends Fragment {
                     String[] items = getResources().getStringArray(R.array.sp_how_entries);
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if(items[position].equals("Зачёт по классу")) {
+                        if(items[position].equals("Среди классов")) {
+                            sp_how.setSelected(false);
+                            sp_grade.setVisibility(View.INVISIBLE);
                             sp_grade.setEnabled(false);
                             String[] itemsgrade = getResources().getStringArray(R.array.sp_sub);
                             class Grade {
@@ -140,7 +142,39 @@ public class RatingFragment extends Fragment {
                             adapter.notifyDataSetChanged();
 
 
-                        }else sp_grade.setEnabled(true);
+                        }if(items[position].equals("Личный зачёт")){
+                            sp_grade.setVisibility(View.VISIBLE);
+                            sp_grade.setEnabled(true);
+                            sortrating(People);
+                            adapter.setPersonArrayList(People);
+                            adapter.notifyDataSetChanged();
+                        }if (items[position].equals("Рейтинг дежурств")){
+                            sp_grade.setVisibility(View.INVISIBLE);
+                            sp_grade.setEnabled(false);
+                            gradep = new ArrayList<>();
+                            myRef.child("dutyclasses").addValueEventListener(new ValueEventListener() {
+                                                                                 @Override
+                                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                                                                                         Duty d = ds.getValue(Duty.class);
+                                                                                         Person p = new Person();
+                                                                                         p.setNumdelay((int) ((d.allrating / d.allnum) * 47.8 ));
+                                                                                         p.setName(d.getGrade());
+                                                                                         gradep.add(p);
+
+                                                                                     }
+                                                                                     adapter.setPersonArrayList(gradep);
+                                                                                     adapter.notifyDataSetChanged();
+
+                                                                                 }
+                                                                                 @Override
+                                                                                 public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                                 }
+                                                                             }
+                            );
+
+
+                        }
                     }
 
                     @Override

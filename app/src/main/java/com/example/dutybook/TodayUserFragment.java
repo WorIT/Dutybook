@@ -53,7 +53,8 @@ public class TodayUserFragment extends Fragment {
     private String dutygradelastonline = "";
     private HashMap<String,String> temp;
     private ArrayList<HistoryLate> lateHistory = new ArrayList<>();
-
+    private double allrating;
+    private double allnum;
 
     private ArrayList<HistoryLate> movedot(ArrayList<HistoryLate> hl){
         for (int i = 0; i < hl.size()  ; i++) {
@@ -79,10 +80,7 @@ public class TodayUserFragment extends Fragment {
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
         myRef = FirebaseDatabase.getInstance().getReference();
-        HashMap<String,String> t = new HashMap<>();
-        t.put("21,03,2019","10-5");
-        Person p = new Person("Михаил Сергеевич", "10-5", "12.04.2020", 16,false,t);
-        myRef.child("people").child(p.getName()).setValue(p);
+
         myRef.child("voiceuser").child(user.getUid()).child("user").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -136,6 +134,8 @@ public class TodayUserFragment extends Fragment {
                     Duty d = ds.getValue(Duty.class);
                     if(d.dutynow){
                         dutygrade = d.grade;
+                        allnum = d.allnum;
+                        allrating = d.allrating;
                         sumrating = d.rating;
                         numvoice = d.numvoice;
 
@@ -191,14 +191,15 @@ public class TodayUserFragment extends Fragment {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 if (user.getEmail() != null){
                     Date dateNow = new Date();
-                    SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                     String today = formatForDateNow.format(dateNow);
                     if (!v.datelast.equals(today)) {
                         double newrating = sumrating + (double) rating;
                         double newnumvoice = numvoice + 1;
                         myRef.child("dutyclasses").child(dutygrade).child("rating").setValue(newrating);
                         myRef.child("dutyclasses").child(dutygrade).child("numvoice").setValue(newnumvoice);
-
+                        myRef.child("dutyclasses").child(dutygrade).child("allrating").setValue(allrating + (double)rating);
+                        myRef.child("dutyclasses").child(dutygrade).child("allnum").setValue(allnum + (double)1);
                         rb_setuser.setIsIndicator(true);
                         tw_rb.setText("Вы успешно оценили дежурство");
 

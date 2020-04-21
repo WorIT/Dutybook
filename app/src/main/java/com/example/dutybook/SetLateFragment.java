@@ -41,7 +41,6 @@ public class SetLateFragment extends Fragment {
             rv.setLayoutManager(layoutManager);
 
             myRef = FirebaseDatabase.getInstance().getReference();
-            ///myRef.child("dutyclasses").child(d.grade).child("comments").child("3").push().setValue("Поиграть в кс");
             myRef.child("people").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

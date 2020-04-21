@@ -9,7 +9,39 @@ public class Duty {
     double rating;
     double numvoice;
     String lastonline;
+    double allrating;
+    double allnum;
 
+    public Duty(ArrayList<String> comments, String grade, Boolean dutynow, double rating, double numvoice, String lastonline, double allrating, double allnum) {
+        this.comments = comments;
+        this.grade = grade;
+        this.dutynow = dutynow;
+        this.rating = rating;
+        this.numvoice = numvoice;
+        this.lastonline = lastonline;
+        this.allrating = allrating;
+        this.allnum = allnum;
+    }
+
+    public void setNumvoice(double numvoice) {
+        this.numvoice = numvoice;
+    }
+
+    public double getAllrating() {
+        return allrating;
+    }
+
+    public void setAllrating(double allrating) {
+        this.allrating = allrating;
+    }
+
+    public double getAllnum() {
+        return allnum;
+    }
+
+    public void setAllnum(double allnum) {
+        this.allnum = allnum;
+    }
 
     public String getLastonline() {
         return lastonline;
