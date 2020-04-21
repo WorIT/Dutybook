@@ -22,6 +22,10 @@ public class Person {
         this.delays = delays;
     }
 
+    public Person(String name, int numdelay) {
+        this.numdelay = numdelay;
+        this.name = name;
+    }
 
     public Person(){}
     public Person(String name, String grade, String datelast, int numdelay, int id) {

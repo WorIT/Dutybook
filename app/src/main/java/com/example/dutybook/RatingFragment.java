@@ -84,7 +84,8 @@ public class RatingFragment extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(items[position].equals("Зачёт по классу")) {
-                            String[] itemsgrade = getResources().getStringArray(R.array.s);
+                            sp_grade.setEnabled(false);
+                            String[] itemsgrade = getResources().getStringArray(R.array.sp_sub);
                             class Grade {
                                 private int numdelays;
                                 private String grades;
@@ -114,15 +115,32 @@ public class RatingFragment extends Fragment {
                                     this.grades = grades;
                                 }
                             }
+                           ArrayList<Person> people = new ArrayList<>();
+                            for (int i = 0; i < itemsgrade.length; i++) {
+                                int sum = 0;
+                                for (int j = 0; j < People.size(); j++) {
+                                    if(People.get(j).getGrade().equals(itemsgrade[i])) {
+                                        sum += People.get(j).getNumdelay();
+                                    }
+                                }
+                                people.add(new Person(itemsgrade[i],sum));
+                            }
 
-
-
+                            for (int i = 0; i < people.size(); i++) {
+                                for (int j = 0; j < people.size(); j++) {
+                                    if(people.get(i).getNumdelay() > people.get(j).getNumdelay()){
+                                        Person temp = people.get(i);
+                                        people.set(i,people.get(j));
+                                        people.set(j,temp);
+                                    }
+                                }
+                            }
 
                             adapter.setPersonArrayList(people);
                             adapter.notifyDataSetChanged();
 
 
-                        }
+                        }else sp_grade.setEnabled(true);
                     }
 
                     @Override

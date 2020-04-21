@@ -79,6 +79,10 @@ public class TodayUserFragment extends Fragment {
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
         myRef = FirebaseDatabase.getInstance().getReference();
+        HashMap<String,String> t = new HashMap<>();
+        t.put("21,03,2019","10-5");
+        Person p = new Person("Михаил Сергеевич", "10-5", "12.04.2020", 16,false,t);
+        myRef.child("people").child(p.getName()).setValue(p);
         myRef.child("voiceuser").child(user.getUid()).child("user").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -114,6 +118,7 @@ public class TodayUserFragment extends Fragment {
 
             }
         });
+
 
         //VoiceUser r = new VoiceUser("19.03.2020",(float)3);
        // myRef.child("voiceuser").child(user.getUid()).setValue(r, new DatabaseReference.CompletionListener() {

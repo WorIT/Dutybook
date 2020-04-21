@@ -71,10 +71,15 @@ class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateViewHold
                 SimpleDateFormat formattime = new SimpleDateFormat("hh:mm:ss");
                 String timenow = formattime.format(dateNow);
                 myRef = FirebaseDatabase.getInstance().getReference();
-
+                HashMap<String, String> temp = new HashMap<>();
                 if (!personArrayList.get(position).getDatelast().equals(today)){
-                    HashMap<String,String> temp = personArrayList.get(position).delays;
-                    temp.put(today_hashmap,timenow);
+                    if(personArrayList.get(position).delays != null) {
+                        temp = personArrayList.get(position).delays;
+                        temp.put(today_hashmap, timenow);
+                    }else
+                    {
+                        temp.put(today_hashmap, timenow);
+                    }
                     Toast.makeText(SetLateAdapter.this.context,"Опоздание зафиксированно",Toast.LENGTH_SHORT).show();
                     myRef.child("people").child(personArrayList.get(position).getName()).child("numdelay").setValue(personArrayList.get(position).getNumdelay() + 1);
                     myRef.child("people").child(personArrayList.get(position).getName()).child("datelast").setValue(today);
