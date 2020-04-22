@@ -44,20 +44,21 @@ public class MessageTeacherFragment extends Fragment {
         myRef = FirebaseDatabase.getInstance().getReference();
 
         myRef.child("dutyclasses").addValueEventListener(new ValueEventListener() {
-                                                             @Override
-                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                                                                     Duty d = ds.getValue(Duty.class);
-                                                                     if(d.dutynow){
-                                                                         dutygrade = d.grade;
-                                                                         comments = d.comments;
-                                                                     }
-                                                                 }
-                                                             }
-                                                             @Override
-                                                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                             }
-                                                         }
+            @Override
+
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Duty d = ds.getValue(Duty.class);
+                    if(d.dutynow){
+                        dutygrade = d.grade;
+                        comments = d.comments;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        }
         );
 
         messageteacher.addTextChangedListener(new TextWatcher(){

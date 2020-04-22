@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sp_grade_duty">
+        <item>все</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+</resources>

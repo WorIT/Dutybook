@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/spinnertexthow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:fontFamily="@font/roboto_mono_bold"
+    android:padding="2dp"
+    android:textAllCaps="false"
+    android:textColor="@android:color/tab_indicator_text"
+    android:textSize="18sp" />

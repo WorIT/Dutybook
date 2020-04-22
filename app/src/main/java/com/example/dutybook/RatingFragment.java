@@ -153,24 +153,23 @@ public class RatingFragment extends Fragment {
                             sp_grade.setEnabled(false);
                             gradep = new ArrayList<>();
                             myRef.child("dutyclasses").addValueEventListener(new ValueEventListener() {
-                                                                                 @Override
-                                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                                                                                         Duty d = ds.getValue(Duty.class);
-                                                                                         Person p = new Person();
-                                                                                         p.setNumdelay((int) ((d.allrating / d.allnum) * 47.8 ));
-                                                                                         p.setName(d.getGrade());
-                                                                                         gradep.add(p);
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        Duty d = ds.getValue(Duty.class);
+                                        Person p = new Person();
+                                        p.setNumdelay((int) ((d.allrating / d.allnum) * 47.8 ));
+                                        p.setName(d.getGrade());
+                                        gradep.add(p);
 
-                                                                                     }
-                                                                                     adapter.setPersonArrayList(gradep);
-                                                                                     adapter.notifyDataSetChanged();
-
-                                                                                 }
-                                                                                 @Override
-                                                                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                                                 }
-                                                                             }
+                                    }
+                                    adapter.setPersonArrayList(gradep);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            }
                             );
 
 
