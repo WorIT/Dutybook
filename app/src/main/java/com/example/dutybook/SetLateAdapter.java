@@ -1,5 +1,6 @@
 package com.example.dutybook;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,17 +25,17 @@ class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateViewHold
     private ArrayList<Person> personArrayList;
     private ArrayList<Person> OrigList;
     private Context context;
-    public SetLateAdapter (ArrayList<Person> personArrayList,Context context){
+    SetLateAdapter(ArrayList<Person> personArrayList, Context context){
         this.OrigList = new ArrayList<>(personArrayList);
         this.personArrayList = personArrayList;
         this.context = context;
     }
 
 
-    public class SetLateViewHolder extends RecyclerView.ViewHolder{
+    static class SetLateViewHolder extends RecyclerView.ViewHolder{
         TextView namesetlate;
         TextView gradesetlate;
-        public SetLateViewHolder(@NonNull View itemView) {
+        SetLateViewHolder(@NonNull View itemView) {
             super(itemView);
             namesetlate = itemView.findViewById(R.id.tvNameSetLate);
             gradesetlate = itemView.findViewById(R.id.tvGradeSetLate);
@@ -58,7 +59,7 @@ class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateViewHold
             public void onClick(View v) {
                 DatabaseReference myRef;
                 Date dateNow = new Date();
-                SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                 String today = formatForDateNow.format(dateNow);
                 String today_hashmap = today.replace('.',',');
                 SimpleDateFormat formattime = new SimpleDateFormat("hh:mm:ss");

@@ -96,11 +96,11 @@ public class RatingFragment extends Fragment {
                                     this.setNumdelays(this.getNumdelays() + 1);
                                     return this.getNumdelays();
                                 }
-                                public int getNumdelays() {
+                                private int getNumdelays() {
                                     return numdelays;
                                 }
 
-                                public void setNumdelays(int numdelays) {
+                                private void setNumdelays(int numdelays) {
                                     this.numdelays = numdelays;
                                 }
 
@@ -118,14 +118,14 @@ public class RatingFragment extends Fragment {
                                 }
                             }
                            ArrayList<Person> people = new ArrayList<>();
-                            for (int i = 0; i < itemsgrade.length; i++) {
+                            for (String s : itemsgrade) {
                                 int sum = 0;
                                 for (int j = 0; j < People.size(); j++) {
-                                    if(People.get(j).getGrade().equals(itemsgrade[i])) {
+                                    if (People.get(j).getGrade().equals(s)) {
                                         sum += People.get(j).getNumdelay();
                                     }
                                 }
-                                people.add(new Person(itemsgrade[i],sum));
+                                people.add(new Person(s, sum));
                             }
 
                             for (int i = 0; i < people.size(); i++) {

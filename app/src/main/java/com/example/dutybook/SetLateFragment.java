@@ -10,26 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 
 public class SetLateFragment extends Fragment {
         private RecyclerView rv;
-
-        private FirebaseAuth mAuth;
         private ArrayList<Person> NotLatePeople = new ArrayList<>();
-        private DatabaseReference myRef;
         private SetLateAdapter adapter;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,11 +33,10 @@ public class SetLateFragment extends Fragment {
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
             rv.setLayoutManager(layoutManager);
 
-            myRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
             myRef.child("people").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    GenericTypeIndicator<ArrayList<Person>> temp = new GenericTypeIndicator<ArrayList<Person>>() {};
 
                     NotLatePeople.clear();
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {

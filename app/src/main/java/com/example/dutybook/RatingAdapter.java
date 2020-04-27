@@ -3,7 +3,6 @@ package com.example.dutybook;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,19 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.RatingViewHolder> {
-    ArrayList<Person> personArrayList;
-    ArrayList<Person> filterList;
-
-    public RatingAdapter (ArrayList<Person> personArrayList){
+    private ArrayList<Person> personArrayList;
+    RatingAdapter(ArrayList<Person> personArrayList){
         this.personArrayList = personArrayList;
-        this.filterList = personArrayList;
     }
 
-    public class RatingViewHolder extends RecyclerView.ViewHolder{
+    static class RatingViewHolder extends RecyclerView.ViewHolder{
         TextView namerating;
         TextView graderating;
         TextView numdelayrating;
-        public RatingViewHolder(@NonNull View itemView) {
+        RatingViewHolder(@NonNull View itemView) {
             super(itemView);
             namerating = itemView.findViewById(R.id.tvNameRatingPerson);
             graderating = itemView.findViewById(R.id.tvGradeRatingPerson);

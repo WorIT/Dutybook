@@ -33,8 +33,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuthReg;
     EditText newemail;
     Button reg;
-    private Person regPerson;
-    private SearchView sv;
     private RecyclerView rv;
     EditText newpassword;
     private DatabaseReference myRef;
@@ -74,7 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
         newpassword = findViewById(R.id.et_new_password);
         reg = findViewById(R.id.btn_registration);
         rv = findViewById(R.id.rv_reg);
-        sv = findViewById(R.id.sv_reg);
+        SearchView sv = findViewById(R.id.sv_reg);
         adapter = new RegistrationAdapter(People,getApplicationContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);

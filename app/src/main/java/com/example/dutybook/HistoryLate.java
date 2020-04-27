@@ -4,7 +4,6 @@ public class HistoryLate {
     private String date;
     private String time;
 
-    public HistoryLate(){}
     public HistoryLate(String date, String time) {
         this.date = date;
         this.time = time;

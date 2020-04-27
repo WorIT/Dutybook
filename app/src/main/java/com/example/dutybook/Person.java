@@ -3,11 +3,11 @@ package com.example.dutybook;
 import java.util.HashMap;
 
 public class Person {
-    String name;
-    String grade;
-    String datelast;
+    private String name;
+    private String grade;
+    private String datelast;
     int numdelay;
-    int id;
+    private int id;
     HashMap<String,String> delays;
     boolean auth;
 

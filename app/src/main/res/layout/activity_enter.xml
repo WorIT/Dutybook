@@ -101,7 +101,7 @@
         android:fontFamily="@font/rubik_light"
         android:text="Пароль"
         android:textColor="#000000"
-        android:textStyle="bold"
+        android:textStyle="normal|bold"
         app:layout_constraintBottom_toTopOf="@+id/enter_password_et"
         app:layout_constraintStart_toStartOf="@+id/enter_password_et" />
 

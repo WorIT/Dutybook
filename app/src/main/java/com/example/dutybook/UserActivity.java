@@ -12,8 +12,6 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-
 public class UserActivity extends AppCompatActivity {
 
     @Override
@@ -44,8 +42,6 @@ public class UserActivity extends AppCompatActivity {
             }
         };
         bnv_main.setOnNavigationItemSelectedListener(navlistener);
-        ArrayList<Person> NotLatePeople = new ArrayList<>();
-        Person person2 = new Person("Феликс Феликсович", "10-4", "17.02.2020", 7, 1);
 
 
     }
