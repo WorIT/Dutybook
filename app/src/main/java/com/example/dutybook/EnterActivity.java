@@ -3,6 +3,7 @@ package com.example.dutybook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,9 +36,6 @@ import java.util.Date;
 import static com.example.dutybook.R.layout.activity_enter;
 
 public class EnterActivity extends AppCompatActivity {
-    private Button btn_enter_duty;
-    private Button btn_enter_registration;
-    private Button btn_fogot;
     static boolean isDuty;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
@@ -54,6 +52,19 @@ public class EnterActivity extends AppCompatActivity {
     static String dutygradelastonline = "";
     private ProgressBar progressBar;
 
+
+
+
+    private void updateduty(String today){
+        if (!dutygradelastonline.equals(today)) {
+            myRef.child("dutyclasses").child(dutygrade).child("rating").setValue((double) 0);
+            myRef.child("dutyclasses").child(dutygrade).child("numvoice").setValue(0);
+            myRef.child("dutyclasses").child(dutygrade).child("lastonline").setValue(today);
+            ArrayList<String> comments = new ArrayList<>();
+            comments.add("Сообщений нет");
+            myRef.child("dutyclasses").child(dutygrade).child("comments").setValue(comments);
+        }
+    }
     public boolean isDutynow(String s){
         myRef.child("dutyclasses").child(s).addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,6 +94,7 @@ public class EnterActivity extends AppCompatActivity {
     }
     public void signin(final String email , final String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
+            progressBar.setVisibility(ProgressBar.VISIBLE);
             boolean r = isDutynow("10-5");
             if (email.toLowerCase().contains("admin239")) {
                 mAuth.signInWithEmailAndPassword(email + "@gmail.com", password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -104,7 +116,8 @@ public class EnterActivity extends AppCompatActivity {
                             //myRef.child("dutyclasses").child(d.grade).setValue(d);
 
 
-                            myRef.child("dutyclasses").addValueEventListener(new ValueEventListener() {
+                            myRef.child("dutyclasses");
+                            myRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -116,14 +129,7 @@ public class EnterActivity extends AppCompatActivity {
                                             SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                                             String today = formatForDateNow.format(dateNow);
 
-                                            if (!dutygradelastonline.equals(today)) {
-                                                myRef.child("dutyclasses").child(dutygrade).child("rating").setValue((double) 0);
-                                                myRef.child("dutyclasses").child(dutygrade).child("numvoice").setValue(0);
-                                                myRef.child("dutyclasses").child(dutygrade).child("lastonline").setValue(today);
-                                                ArrayList<String> comments = new ArrayList<>();
-                                                comments.add("Сообщений нет");
-                                                myRef.child("dutyclasses").child(dutygrade).child("comments").setValue(comments);
-                                            }
+                                            updateduty(today);
                                             progressBar.setVisibility(ProgressBar.INVISIBLE);
                                             Intent intent_main = new Intent(EnterActivity.this, TeacherActivity.class);
                                             startActivity(intent_main);
@@ -168,8 +174,9 @@ public class EnterActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Duty dutynow = dataSnapshot.getValue(Duty.class);
                                     Date dateNow = new Date();
-                                    SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                                    @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                                     String today = formatForDateNow.format(dateNow);
+                                    assert dutynow != null;
                                     if (!dutynow.lastonline.equals(today)) {
                                         myRef.child("dutyclasses").child(email).child("rating").setValue((double) 0);
                                         myRef.child("dutyclasses").child(email).child("numvoice").setValue(0);
@@ -179,7 +186,6 @@ public class EnterActivity extends AppCompatActivity {
                                         myRef.child("dutyclasses").child(email).child("comments").setValue(comments);
                                     }
                                     if (dutynow.getDutynow()) {
-                                        ///Toast.makeText(EnterActivity.this, "Авторизация успешна", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(ProgressBar.INVISIBLE);
                                         Intent intent_main = new Intent(EnterActivity.this, MainActivity.class);
                                         startActivity(intent_main);
@@ -266,7 +272,7 @@ public class EnterActivity extends AppCompatActivity {
         chek_remid=findViewById(R.id.chek_remind);
         mSettings=getSharedPreferences(APP_PREFERENCES,Context.MODE_PRIVATE);
         enter_login_et=findViewById(R.id.enter_login_et);
-        btn_fogot=findViewById(R.id.btn_fogotpassword);
+        Button btn_fogot = findViewById(R.id.btn_fogotpassword);
         enter_password_et=findViewById(R.id.enter_password_et);
         progressBar =  findViewById(R.id.progressBar);
 
@@ -384,15 +390,14 @@ class TryAgainListener implements View.OnClickListener {
                 /// };
 
 
-                btn_enter_duty = findViewById(R.id.btn_enter_user);
-                btn_enter_registration = findViewById(R.id.btn_enter_registration);
+        Button btn_enter_duty = findViewById(R.id.btn_enter_user);
+        Button btn_enter_registration = findViewById(R.id.btn_enter_registration);
                 btn_enter_duty.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(isOnline(getApplicationContext())){
 
                             signin(enter_login_et.getText().toString(), enter_password_et.getText().toString());
-                            progressBar.setVisibility(ProgressBar.VISIBLE);
                         }else
                         {
                             Snackbar snackbarno = Snackbar.make(contextView, "Ошибка подключения", Snackbar.LENGTH_LONG);
@@ -408,7 +413,6 @@ class TryAgainListener implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
                         Intent intent_main = new Intent(EnterActivity.this, RegistrationActivity.class);
-                        EnterActivity.this.finish();
                         startActivity(intent_main);
                     }
                 });

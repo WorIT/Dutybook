@@ -15,6 +15,7 @@ class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.RatingViewHolder>
     RatingAdapter(ArrayList<Person> personArrayList){
         this.personArrayList = personArrayList;
     }
+    private int x = 0;
 
     static class RatingViewHolder extends RecyclerView.ViewHolder{
         TextView namerating;
@@ -25,7 +26,6 @@ class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.RatingViewHolder>
             namerating = itemView.findViewById(R.id.tvNameRatingPerson);
             graderating = itemView.findViewById(R.id.tvGradeRatingPerson);
             numdelayrating = itemView.findViewById(R.id.tvRatingPersonNumdelay);
-
         }
     }
 
