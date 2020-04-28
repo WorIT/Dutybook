@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.classes;
 
 import java.util.HashMap;
 
@@ -6,10 +6,10 @@ public class Person {
     private String name;
     private String grade;
     private String datelast;
-    int numdelay;
+    private int numdelay;
     private int id;
-    HashMap<String,String> delays;
-    boolean auth;
+    private HashMap<String,String> delays;
+    private boolean auth;
 
 
 

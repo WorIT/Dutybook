@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.fragments;
 
 import android.os.Bundle;
 
@@ -14,8 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.dutybook.R;
 import com.example.dutybook.adapters.RatingAdapter;
 import com.example.dutybook.classes.Duty;
+import com.example.dutybook.classes.Person;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +29,7 @@ import java.util.Objects;
 
 
 public class RatingFragment extends Fragment {
-    static private RecyclerView rv;
+    private final Double MAGIC_NUMBER = 47.8;
     static private ArrayList<Person> People = new ArrayList<>();
     private DatabaseReference myRef;
     private Spinner sp_how;
@@ -37,10 +39,11 @@ public class RatingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rating, container, false);
-                rv = view.findViewById(R.id.RecV_rating);
-                sp_how = view.findViewById(R.id.sp_how);
-                sp_grade = view.findViewById(R.id.sp_grade);
-        final RatingAdapter adapter = new RatingAdapter (People);
+        RecyclerView rv = view.findViewById(R.id.RecV_rating);
+        sp_how = view.findViewById(R.id.sp_how);
+        sp_grade = view.findViewById(R.id.sp_grade);
+        final RatingAdapter adapter;
+        adapter = new RatingAdapter (People);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
@@ -90,36 +93,7 @@ public class RatingFragment extends Fragment {
                             sp_grade.setVisibility(View.INVISIBLE);
                             sp_grade.setEnabled(false);
                             String[] itemsgrade = getResources().getStringArray(R.array.sp_sub);
-                            class Grade {
-                                private int numdelays;
-                                private String grades;
-
-                                public int up(){
-                                    this.setNumdelays(this.getNumdelays() + 1);
-                                    return this.getNumdelays();
-                                }
-                                private int getNumdelays() {
-                                    return numdelays;
-                                }
-
-                                private void setNumdelays(int numdelays) {
-                                    this.numdelays = numdelays;
-                                }
-
-                                public String getGrades() {
-                                    return grades;
-                                }
-
-                                public void setGrades(String grades) {
-                                    this.grades = grades;
-                                }
-
-                                public Grade(int numdelays, String grades) {
-                                    this.numdelays = numdelays;
-                                    this.grades = grades;
-                                }
-                            }
-                           ArrayList<Person> people = new ArrayList<>();
+                            ArrayList<Person> people = new ArrayList<>();
                             for (String s : itemsgrade) {
                                 int sum = 0;
                                 for (int j = 0; j < People.size(); j++) {
@@ -160,7 +134,8 @@ public class RatingFragment extends Fragment {
                                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
                                         Duty d = ds.getValue(Duty.class);
                                         Person p = new Person();
-                                        p.setNumdelay((int) ((d.allrating / d.allnum) * 47.8 ));
+                                        assert d != null;
+                                        p.setNumdelay((int) ((d.getAllrating() / d.getAllnum()) * MAGIC_NUMBER ));
                                         p.setName(d.getGrade());
                                         gradep.add(p);
 
@@ -219,7 +194,7 @@ public class RatingFragment extends Fragment {
 
 
 
-    public void sortrating(ArrayList<Person> p){
+    private void sortrating(ArrayList<Person> p){
         for (int i = 0; i < p.size(); i++) {
             for (int j = 0; j < p.size() ; j++) {
                 if(p.get(i).getNumdelay() > p.get(j).getNumdelay()){

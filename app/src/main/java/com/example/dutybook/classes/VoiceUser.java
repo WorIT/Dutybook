@@ -1,9 +1,9 @@
-package com.example.dutybook;
+package com.example.dutybook.classes;
 
 public class VoiceUser {
-    String datelast;
-    float ratinglast;
-    Person person;
+    private String datelast;
+    private float ratinglast;
+    private Person person;
 
     public VoiceUser(){}
     public VoiceUser(String datelast, float ratinglast) {
@@ -14,6 +14,14 @@ public class VoiceUser {
     public VoiceUser(String datelast, float ratinglast, Person person) {
         this.datelast = datelast;
         this.ratinglast = ratinglast;
+        this.person = person;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
         this.person = person;
     }
 

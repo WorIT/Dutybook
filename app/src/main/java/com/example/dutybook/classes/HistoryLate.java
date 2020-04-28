@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.classes;
 
 public class HistoryLate {
     private String date;

@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.example.dutybook.R;
 import com.example.dutybook.adapters.SetLateAdapter;
+import com.example.dutybook.classes.Person;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

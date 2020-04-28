@@ -8,18 +8,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dutybook.HistoryLate;
+import com.example.dutybook.classes.HistoryLate;
 import com.example.dutybook.R;
 
 import java.util.ArrayList;
 
-class HistoryLateAdapter extends RecyclerView.Adapter<HistoryLateAdapter.HistoryLateViewHolder> {
-    ArrayList<com.example.dutybook.HistoryLate> HistoryLate;
+public class HistoryLateAdapter extends RecyclerView.Adapter<HistoryLateAdapter.HistoryLateViewHolder> {
+    public ArrayList<com.example.dutybook.classes.HistoryLate> HistoryLate;
 
-    class HistoryLateViewHolder extends RecyclerView.ViewHolder{
+    public HistoryLateAdapter(ArrayList<com.example.dutybook.classes.HistoryLate> lateHistory) {
+        this.HistoryLate = lateHistory;
+    }
+
+    public static class HistoryLateViewHolder extends RecyclerView.ViewHolder{
         TextView Datelate;
         TextView Timelate;
-        public HistoryLateViewHolder(@NonNull View itemView) {
+        HistoryLateViewHolder(@NonNull View itemView) {
             super(itemView);
             Datelate = itemView.findViewById(R.id.tvDateHistoryPerson);
             Timelate = itemView.findViewById(R.id.tvTimeHistoryPerson);
@@ -47,5 +51,5 @@ class HistoryLateAdapter extends RecyclerView.Adapter<HistoryLateAdapter.History
         return HistoryLate.size();
     }
 
-};
+}
 

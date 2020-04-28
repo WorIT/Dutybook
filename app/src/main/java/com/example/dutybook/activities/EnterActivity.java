@@ -1,15 +1,10 @@
-package com.example.dutybook;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.dutybook.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +13,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.dutybook.R;
 import com.example.dutybook.classes.Duty;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,16 +32,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
+import static com.example.dutybook.R.id.chek_remind;
 import static com.example.dutybook.R.layout.activity_enter;
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class EnterActivity extends AppCompatActivity {
-    static boolean isDuty;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = getInstance();
     private DatabaseReference myRef;
-    private   FirebaseAuth.AuthStateListener mAuthListener;
     private EditText enter_password_et;
-    private EditText enter_login_et;
+    private EditText enter_login_et ;
     private ArrayList<String> gradelist = new ArrayList<>();
     private CheckBox chek_remid;
     public static final String APP_PREFERENCES = "mysettings";
@@ -52,9 +52,6 @@ public class EnterActivity extends AppCompatActivity {
     static String dutygrade = "";
     static String dutygradelastonline = "";
     private ProgressBar progressBar;
-
-
-
 
     private void updateduty(String today){
         if (!dutygradelastonline.equals(today)) {
@@ -66,24 +63,7 @@ public class EnterActivity extends AppCompatActivity {
             myRef.child("dutyclasses").child(dutygrade).child("comments").setValue(comments);
         }
     }
-    public boolean isDutynow(String s){
-        myRef.child("dutyclasses").child(s).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               Duty dutynow = dataSnapshot.getValue(Duty.class);
-                if(dutynow.dutynow){
-                    isDuty = true;
-                }
-                else isDuty = false;
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-            return isDuty;
-    }
     public boolean inGrade(String s){
         boolean t = false;
         for (int i = 0; i < gradelist.size(); i++) {
@@ -91,12 +71,15 @@ public class EnterActivity extends AppCompatActivity {
                 t = true;
             }
         }
+
         return t;
     }
+
+
     public void signin(final String email , final String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
             progressBar.setVisibility(ProgressBar.VISIBLE);
-            boolean r = isDutynow("10-5");
+           // boolean r = isDutynow("10-5");
             if (email.toLowerCase().contains("admin239")) {
                 mAuth.signInWithEmailAndPassword(email + "@gmail.com", password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -117,17 +100,17 @@ public class EnterActivity extends AppCompatActivity {
                             //myRef.child("dutyclasses").child(d.grade).setValue(d);
 
 
-                            myRef.child("dutyclasses");
-                            myRef.addValueEventListener(new ValueEventListener() {
+                            myRef.child("dutyclasses").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                         Duty d = ds.getValue(Duty.class);
-                                        if (d.dutynow) {
-                                            dutygrade = d.grade;
-                                            dutygradelastonline = d.lastonline;
+                                        assert d != null;
+                                        if (d.getDutynow()) {
+                                            dutygrade = d.getGrade();
+                                            dutygradelastonline = d.getLastonline();
                                             Date dateNow = new Date();
-                                            SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                                            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                                             String today = formatForDateNow.format(dateNow);
 
                                             updateduty(today);
@@ -136,6 +119,7 @@ public class EnterActivity extends AppCompatActivity {
                                             startActivity(intent_main);
                                         }
                                     }
+                                    progressBar.setVisibility(ProgressBar.INVISIBLE);
                                 }
 
                                 @Override
@@ -147,6 +131,7 @@ public class EnterActivity extends AppCompatActivity {
 
                         } else {
                             View snackview = findViewById(R.id.btn_fogotpassword);
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
                             Snackbar snackbarno = Snackbar.make(snackview, "Ошибка авторизации", Snackbar.LENGTH_LONG);
                             View snackbarView = snackbarno.getView();
                             snackbarView.setBackgroundColor(getResources().getColor(R.color.inererror));
@@ -157,7 +142,7 @@ public class EnterActivity extends AppCompatActivity {
                 });
 
             } else if (email.length() == 4 || email.length() == 3 && inGrade(email)) {
-                boolean rd = isDutynow("10-5");
+                //boolean rd = isDutynow("10-5");
                 mAuth.signInWithEmailAndPassword(email + "@gmail.com", password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -178,7 +163,7 @@ public class EnterActivity extends AppCompatActivity {
                                     @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                                     String today = formatForDateNow.format(dateNow);
                                     assert dutynow != null;
-                                    if (!dutynow.lastonline.equals(today)) {
+                                    if (!dutynow.getLastonline().equals(today)) {
                                         myRef.child("dutyclasses").child(email).child("rating").setValue((double) 0);
                                         myRef.child("dutyclasses").child(email).child("numvoice").setValue(0);
                                         myRef.child("dutyclasses").child(email).child("lastonline").setValue(today);
@@ -190,8 +175,10 @@ public class EnterActivity extends AppCompatActivity {
                                         progressBar.setVisibility(ProgressBar.INVISIBLE);
                                         Intent intent_main = new Intent(EnterActivity.this, MainActivity.class);
                                         startActivity(intent_main);
-                                    } else
+                                    } else{
                                         Toast.makeText(EnterActivity.this, "Cегодня ваш класс не дежурит", Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                    }
 
                                 }
 
@@ -204,6 +191,7 @@ public class EnterActivity extends AppCompatActivity {
 
                         } else {
                             View snackview = findViewById(R.id.btn_fogotpassword);
+                            progressBar.setVisibility(View.INVISIBLE);
                             Snackbar snackbarno = Snackbar.make(snackview, "Ошибка авторизации", Snackbar.LENGTH_LONG);
                             View snackbarView = snackbarno.getView();
                             snackbarView.setBackgroundColor(getResources().getColor(R.color.inererror));
@@ -225,12 +213,13 @@ public class EnterActivity extends AppCompatActivity {
                                             editor.apply();
 
                                         }
-                                        if (mAuth.getCurrentUser().isEmailVerified()) {
+                                        if (Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified()) {
                                             progressBar.setVisibility(ProgressBar.INVISIBLE);
                                             Intent intent_main = new Intent(EnterActivity.this, UserActivity.class);
                                             startActivity(intent_main);
                                         } else {
                                             View snackview = findViewById(R.id.btn_fogotpassword);
+                                            progressBar.setVisibility(View.INVISIBLE);
                                             Snackbar snackbarno = Snackbar.make(snackview, "Подтвердите свой электронный адрес", Snackbar.LENGTH_LONG);
                                             View snackbarView = snackbarno.getView();
                                             snackbarView.setBackgroundColor(getResources().getColor(R.color.inererror));
@@ -238,6 +227,7 @@ public class EnterActivity extends AppCompatActivity {
                                         }
                                     } else {
                                         View snackview = findViewById(R.id.btn_fogotpassword);
+                                        progressBar.setVisibility(View.INVISIBLE);
                                         Snackbar snackbarno = Snackbar.make(snackview, "Ошибка авторизации", Snackbar.LENGTH_LONG);
                                         View snackbarView = snackbarno.getView();
                                         snackbarView.setBackgroundColor(getResources().getColor(R.color.inererror));
@@ -252,52 +242,20 @@ public class EnterActivity extends AppCompatActivity {
                 }
             }
         }
-  static boolean isOnline(Context context)
-    {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting())
-        {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(activity_enter);
         myRef=FirebaseDatabase.getInstance().getReference();
-        mAuth=FirebaseAuth.getInstance();
-        chek_remid=findViewById(R.id.chek_remind);
+        chek_remid=findViewById(chek_remind);
+        enter_login_et = findViewById(R.id.enter_login_et);
         mSettings=getSharedPreferences(APP_PREFERENCES,Context.MODE_PRIVATE);
-        enter_login_et=findViewById(R.id.enter_login_et);
         Button btn_fogot = findViewById(R.id.btn_fogotpassword);
-        enter_password_et=findViewById(R.id.enter_password_et);
+        enter_password_et= findViewById(R.id.enter_password_et);
         progressBar =  findViewById(R.id.progressBar);
+       // @SuppressLint("CutPasteId") final View contextView=findViewById(R.id.btn_fogotpassword);
 
-final View contextView=findViewById(R.id.btn_fogotpassword);
-
-class TryAgainListener implements View.OnClickListener {
-    @Override
-    public void onClick(View v) {
-        View contextView = findViewById(android.R.id.content);
-        if (isOnline(getApplicationContext())) {
-            Snackbar snackbaryes = Snackbar.make(contextView, "Соединение установлено", Snackbar.LENGTH_LONG);
-            View snackbarView = snackbaryes.getView();
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.ineryes));
-            snackbaryes.show();
-        } else {
-            Snackbar snackbarno = Snackbar.make(contextView, "Ошибка подключения", Snackbar.LENGTH_LONG);
-            View snackbarView = snackbarno.getView();
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.inererror));
-            snackbarno.setAction("Повторить", new TryAgainListener());
-            snackbarno.show();
-        }
-
-    }
-}
 
 
 
@@ -312,16 +270,6 @@ class TryAgainListener implements View.OnClickListener {
             chek_remid.setChecked(true);
             enter_login_et.setText(mSettings.getString(APP_PREFERENCES_LOGIN, ""));
             enter_password_et.setText(mSettings.getString(APP_PREFERENCES_PASSWORD, ""));
-            if(!isOnline(getApplicationContext())){
-                Snackbar snackbarno = Snackbar.make(contextView, "Ошибка подключения", Snackbar.LENGTH_LONG);
-                View snackbarView = snackbarno.getView();
-                snackbarView.setBackgroundColor(getResources().getColor(R.color.inererror));
-                snackbarno.setAction("Повторить", new TryAgainListener());
-                snackbarno.show();
-            }else{
-                signin(enter_login_et.getText().toString(),enter_password_et.getText().toString());
-                progressBar.setVisibility(ProgressBar.VISIBLE);
-            }
 
 
         }
@@ -396,17 +344,8 @@ class TryAgainListener implements View.OnClickListener {
                 btn_enter_duty.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(isOnline(getApplicationContext())){
 
                             signin(enter_login_et.getText().toString(), enter_password_et.getText().toString());
-                        }else
-                        {
-                            Snackbar snackbarno = Snackbar.make(contextView, "Ошибка подключения", Snackbar.LENGTH_LONG);
-                            View snackbarView = snackbarno.getView();
-                            snackbarView.setBackgroundColor(getResources().getColor(R.color.inererror));
-                            snackbarno.setAction("Повторить", new TryAgainListener());
-                            snackbarno.show();
-                        }
 
                     }
                 });

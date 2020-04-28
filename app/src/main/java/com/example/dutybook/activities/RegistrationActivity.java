@@ -1,10 +1,6 @@
-package com.example.dutybook;
+package com.example.dutybook.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +12,15 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.dutybook.R;
 import com.example.dutybook.adapters.RegistrationAdapter;
+import com.example.dutybook.classes.Person;
+import com.example.dutybook.classes.VoiceUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,24 +29,24 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.google.firebase.database.FirebaseDatabase.getInstance;
+
 public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuthReg;
-    EditText newemail;
-    Button reg;
+    private EditText newemail;
     private RecyclerView rv;
-    EditText newpassword;
+    private EditText newpassword;
     private DatabaseReference myRef;
-    static RegistrationAdapter adapter;
-    static ArrayList<Person> People = new ArrayList<>();
+    private  RegistrationAdapter adapter;
+    static ArrayList<Person> People ;
 
     public void registration(String email, String password, final Person regPerson){
-        if(!regPerson.auth) {
-            myRef = FirebaseDatabase.getInstance().getReference();
+        if(!regPerson.isAuth()) {
+            myRef = getInstance().getReference();
             mAuthReg.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -50,6 +54,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuthReg.getCurrentUser();
                                 VoiceUser ry = new VoiceUser("19.03.2020", (float) 3);
                                 myRef.child("people").child(regPerson.getName()).child("auth").setValue(true);
+                                assert user != null;
                                 myRef.child("voiceuser").child(user.getUid()).setValue(ry);
                                 myRef.child("voiceuser").child(user.getUid()).child("user").setValue(regPerson);
                                 user.sendEmailVerification();
@@ -67,25 +72,30 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuthReg = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_registration);
+        rv = findViewById(R.id.rv_reg);
+        People = new ArrayList<>();
+        Button reg = findViewById(R.id.btn_registration);
+        adapter = new RegistrationAdapter(People,getApplicationContext());
+        myRef = getInstance().getReference();
+        SearchView sv = findViewById(R.id.sv_reg);
+        mAuthReg = FirebaseAuth.getInstance();
         newemail = findViewById(R.id.et_new_login);
         newpassword = findViewById(R.id.et_new_password);
-        reg = findViewById(R.id.btn_registration);
-        rv = findViewById(R.id.rv_reg);
-        SearchView sv = findViewById(R.id.sv_reg);
-        adapter = new RegistrationAdapter(People,getApplicationContext());
+
+        final Dialog dialog = new Dialog(RegistrationActivity.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
+        myRef = getInstance().getReference();
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
-        myRef = FirebaseDatabase.getInstance().getReference();
-        final Dialog dialog = new Dialog(RegistrationActivity.this);
         dialog.setContentView(R.layout.dialog_reg);
         final Button btn_sendmail;
         final TextView tv_regemail,tv_regperson;
         tv_regemail = dialog.findViewById(R.id.tv_regemail);
         tv_regperson = dialog.findViewById(R.id.reg_person);
         btn_sendmail = dialog.findViewById(R.id.btn_sendreg);
+
         myRef.child("people").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -125,6 +135,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         });
         reg.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 if(People.size() == 1) {

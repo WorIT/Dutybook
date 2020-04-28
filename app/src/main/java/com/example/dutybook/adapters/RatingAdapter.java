@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dutybook.Person;
 import com.example.dutybook.R;
+import com.example.dutybook.classes.Person;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.RatingView
         this.personArrayList = personArrayList;
     }
 
-    static class RatingViewHolder extends RecyclerView.ViewHolder{
+    public static class RatingViewHolder extends RecyclerView.ViewHolder{
         TextView namerating;
         TextView graderating;
         TextView numdelayrating;
@@ -28,7 +28,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.RatingView
             namerating = itemView.findViewById(R.id.tvNameRatingPerson);
             graderating = itemView.findViewById(R.id.tvGradeRatingPerson);
             numdelayrating = itemView.findViewById(R.id.tvRatingPersonNumdelay);
-
         }
     }
 

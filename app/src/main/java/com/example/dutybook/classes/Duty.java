@@ -3,14 +3,14 @@ package com.example.dutybook.classes;
 import java.util.ArrayList;
 
 public class Duty {
-    ArrayList<String> comments = new ArrayList<>();
-    String grade;
-    Boolean dutynow;
-    double rating;
-    double numvoice;
-    String lastonline;
-    double allrating;
-    double allnum;
+    private ArrayList<String> comments = new ArrayList<>();
+    private String grade;
+    private Boolean dutynow;
+    private double rating;
+    private double numvoice;
+    private String lastonline;
+    private double allrating;
+    private double allnum;
 
     public Duty(ArrayList<String> comments, String grade, Boolean dutynow, double rating, double numvoice, String lastonline, double allrating, double allnum) {
         this.comments = comments;

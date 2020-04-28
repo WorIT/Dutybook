@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.fragments;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.dutybook.R;
 import com.example.dutybook.classes.Duty;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,11 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MessageTeacherFragment extends Fragment {
-    private Button btn_send;
     private EditText messageteacher;
     private String message;
     private DatabaseReference myRef;
-    static ArrayList<String> comments = new ArrayList<>();
+    private static ArrayList<String> comments = new ArrayList<>();
     static private String dutygrade;
 
 
@@ -36,7 +36,7 @@ public class MessageTeacherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message_teacher, container, false);
-        btn_send = view.findViewById(R.id.btn_sendmessage);
+        Button btn_send = view.findViewById(R.id.btn_sendmessage);
         messageteacher = view.findViewById(R.id.newmessageteacher);
         myRef = FirebaseDatabase.getInstance().getReference();
 
@@ -46,9 +46,10 @@ public class MessageTeacherFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Duty d = ds.getValue(Duty.class);
-                    if(d.dutynow){
-                        dutygrade = d.grade;
-                        comments = d.comments;
+                    assert d != null;
+                    if(d.getDutynow()){
+                        dutygrade = d.getGrade();
+                        comments = d.getComments();
                     }
                 }
             }
@@ -86,11 +87,9 @@ public class MessageTeacherFragment extends Fragment {
                         ArrayList<String> newcomments = new ArrayList<>();
                         newcomments.add(message);
                         myRef.child("dutyclasses").child(dutygrade).child("comments").setValue(newcomments);
-                       /// Toast.makeText(getActivity(), "Сообщение успешно отправлено", Toast.LENGTH_LONG).show();
                     } else {
                         comments.add(message);
                         myRef.child("dutyclasses").child(dutygrade).child("comments").setValue(comments);
-                      ///  Toast.makeText(getActivity(), "Сообщение успешно отправлено", Toast.LENGTH_LONG).show();
                     }
                 }
 

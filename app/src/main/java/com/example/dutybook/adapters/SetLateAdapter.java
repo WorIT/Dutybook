@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dutybook.Person;
+import com.example.dutybook.classes.Person;
 import com.example.dutybook.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateViewHolder> implements Filterable{
+public class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateViewHolder> implements Filterable{
     private ArrayList<Person> personArrayList;
     private ArrayList<Person> OrigList;
     private Context context;
-    SetLateAdapter(ArrayList<Person> personArrayList, Context context){
+    public SetLateAdapter(ArrayList<Person> personArrayList, Context context){
         this.OrigList = new ArrayList<>(personArrayList);
         this.personArrayList = personArrayList;
         this.context = context;
@@ -64,13 +64,13 @@ class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateViewHold
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                 String today = formatForDateNow.format(dateNow);
                 String today_hashmap = today.replace('.',',');
-                SimpleDateFormat formattime = new SimpleDateFormat("hh:mm:ss");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat formattime = new SimpleDateFormat("hh:mm:ss");
                 String timenow = formattime.format(dateNow);
                 myRef = FirebaseDatabase.getInstance().getReference();
                 HashMap<String, String> temp = new HashMap<>();
                 if (!personArrayList.get(position).getDatelast().equals(today)){
-                    if(personArrayList.get(position).delays != null) {
-                        temp = personArrayList.get(position).delays;
+                    if(personArrayList.get(position).getDelays() != null) {
+                        temp = personArrayList.get(position).getDelays();
                         temp.put(today_hashmap, timenow);
                     }else
                     {

@@ -12,16 +12,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dutybook.Person;
+import com.example.dutybook.classes.Person;
 import com.example.dutybook.R;
 
 import java.util.ArrayList;
 
-class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapter.RegistrationViewHolder> implements Filterable{
+public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapter.RegistrationViewHolder> implements Filterable{
     private ArrayList<Person> personArrayList;
     private ArrayList<Person> OrigList;
     private Context context;
-    RegistrationAdapter(ArrayList<Person> personArrayList, Context context){
+    public RegistrationAdapter(ArrayList<Person> personArrayList, Context context){
         this.OrigList = new ArrayList<>(personArrayList);
         this.personArrayList = personArrayList;
         this.context = context;

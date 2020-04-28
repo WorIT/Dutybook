@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,8 +15,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dutybook.R;
 import com.example.dutybook.adapters.HistoryLateAdapter;
 import com.example.dutybook.classes.Duty;
+import com.example.dutybook.classes.HistoryLate;
+import com.example.dutybook.classes.Person;
+import com.example.dutybook.classes.VoiceUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,14 +32,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 
 public class TodayUserFragment extends Fragment {
     private RatingBar rb_setuser;
     private RatingBar rb_now;
     private TextView tv_dutyclass;
-    private static RecyclerView rv;
     private static VoiceUser v;
     private String dutygrade = "";
     private double dutyratingnow;
@@ -48,16 +50,15 @@ public class TodayUserFragment extends Fragment {
     private TextView tw_rb;
     private Integer personnowNumdelay;
     private String dutygradelastonline = "";
-    private HashMap<String,String> temp;
     private ArrayList<HistoryLate> lateHistory = new ArrayList<>();
     private double allrating;
     private double allnum;
 
-    private ArrayList<HistoryLate> movedot(ArrayList<HistoryLate> hl){
+
+    private void movedot(ArrayList<HistoryLate> hl){
         for (int i = 0; i < hl.size()  ; i++) {
             hl.get(i).setDate(hl.get(i).getDate().replace(',','.'));
         }
-        return hl;
     }
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -65,8 +66,9 @@ public class TodayUserFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_today_user, container, false);
         rb_now = view.findViewById(R.id.rb_now);
-        rv = view.findViewById(R.id.rv_historylate);
+        RecyclerView rv = view.findViewById(R.id.rv_historylate);
         tv_nameuser = view.findViewById(R.id.tv_nameuser);
+        myRef = FirebaseDatabase.getInstance().getReference();
         tv_numdelayhistory = view.findViewById(R.id.tv_numdelayHistory);
         tv_dutyclass = view.findViewById(R.id.tv_dutyclass);
         tw_rb = view.findViewById(R.id.tv_active_rb);
@@ -76,25 +78,28 @@ public class TodayUserFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
-        myRef = FirebaseDatabase.getInstance().getReference();
+
 
         myRef.child("voiceuser").child(user.getUid()).child("user").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 personnow = dataSnapshot.getValue(Person.class);
+
+
                 myRef.child("people").child(personnow.getName()).addValueEventListener(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         personnow = dataSnapshot.getValue(Person.class);
-                        personnowNumdelay = personnow.numdelay;
+                        assert personnow != null;
+                        personnowNumdelay = personnow.getNumdelay();
                         tv_nameuser.setText(personnow.getName() + " " + personnow.getGrade());
                         tv_numdelayhistory.setText(Integer.toString(personnowNumdelay));
-                        ArrayList<String> date = new ArrayList<>(personnow.delays.keySet());
-                        date = sortdate(date);
+                        ArrayList<String> date = new ArrayList<>(personnow.getDelays().keySet());
+                        sortdate(date);
                         ArrayList<HistoryLate> HistoryLateList = new ArrayList<>();
                         for (int i = 0; i < date.size() ; i++) {
-                            HistoryLate h = new HistoryLate(date.get(i),personnow.delays.get(date.get(i)));
+                            HistoryLate h = new HistoryLate(date.get(i),personnow.getDelays().get(date.get(i)));
                             HistoryLateList.add(h);
                         }
                         movedot(HistoryLateList);
@@ -125,20 +130,21 @@ public class TodayUserFragment extends Fragment {
 
 
         myRef.child("dutyclasses").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Duty d = ds.getValue(Duty.class);
-                    if(d.dutynow){
-                        dutygrade = d.grade;
-                        allnum = d.allnum;
-                        allrating = d.allrating;
-                        sumrating = d.rating;
-                        numvoice = d.numvoice;
+                    if (d.getDutynow()) {
+                        dutygrade = d.getGrade();
+                        allnum = d.getAllnum();
+                        allrating = d.getAllrating();
+                        sumrating = d.getRating();
+                        numvoice = d.getNumvoice();
 
-                        dutygradelastonline = d.lastonline;
+                        dutygradelastonline = d.getLastonline();
                         Date dateNow = new Date();
-                        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                         String today = formatForDateNow.format(dateNow);
 
                         if (!dutygradelastonline.equals(today)) {
@@ -152,13 +158,14 @@ public class TodayUserFragment extends Fragment {
 
 
                         tv_dutyclass.setText("Сегодня дежурит " + dutygrade + " класс");
-                        dutyratingnow = (double)d.rating / d.numvoice;
-                        rb_now.setRating((float)dutyratingnow);
+                        dutyratingnow = d.getRating() / d.getNumvoice();
+                        rb_now.setRating((float) dutyratingnow);
                         rb_now.setIsIndicator(true);
 
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -169,10 +176,10 @@ public class TodayUserFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 v = dataSnapshot.getValue(VoiceUser.class);
                 Date dateNow = new Date();
-                SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                 String today = formatForDateNow.format(dateNow);
-                if (v.datelast.equals(today)) {
-                    rb_setuser.setRating(v.ratinglast);
+                if (v.getDatelast().equals(today)) {
+                    rb_setuser.setRating(v.getRatinglast());
                     tw_rb.setText("Вы успешно оценили дежурство");
                     rb_setuser.setIsIndicator(true);
                 }
@@ -190,7 +197,7 @@ public class TodayUserFragment extends Fragment {
                     Date dateNow = new Date();
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
                     String today = formatForDateNow.format(dateNow);
-                    if (!v.datelast.equals(today)) {
+                    if (!v.getDatelast().equals(today)) {
                         double newrating = sumrating + (double) rating;
                         double newnumvoice = numvoice + 1;
                         myRef.child("dutyclasses").child(dutygrade).child("rating").setValue(newrating);
@@ -221,7 +228,7 @@ public class TodayUserFragment extends Fragment {
 
     }
 
-    public ArrayList<String> sortdate(ArrayList<String> date){
+    private void sortdate(ArrayList<String> date){
         for (int i = 0; i < date.size(); i++) {
             for (int j = 0; j < date.size(); j++) {
                 if(Integer.parseInt(date.get(i).substring(6,10)) > Integer.parseInt(date.get(j).substring(6,10))){
@@ -249,6 +256,5 @@ public class TodayUserFragment extends Fragment {
                 }
             }
         }
-        return date;
     }
 }

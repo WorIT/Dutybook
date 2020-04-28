@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
+
+import com.example.dutybook.R;
 
 public class SettingsActivity extends AppCompatActivity {
     Button btn_exit;
@@ -23,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences settings = getApplicationContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
                 settings.edit().clear().apply();
-                Intent intent = new Intent(SettingsActivity.this,EnterActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, EnterActivity.class);
                 startActivity(intent);
             }
         });

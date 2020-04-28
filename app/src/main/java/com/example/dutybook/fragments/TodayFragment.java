@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.dutybook.R;
 import com.example.dutybook.classes.Duty;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -47,9 +48,10 @@ public class TodayFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Duty d = ds.getValue(Duty.class);
-                    if (d.dutynow) {
-                        dutygrade.add(d.grade);
-                        dutyrating = (double) d.rating / d.numvoice;
+                    assert d != null;
+                    if (d.getDutynow()) {
+                        dutygrade.add(d.getGrade());
+                        dutyrating =  d.getRating() / d.getNumvoice();
                         rb.setRating((float) dutyrating);
                         rb.setIsIndicator(true);
                         tv_today_dutyclass.setText("Сегодня дежурит " + d.getGrade() + " класс");
