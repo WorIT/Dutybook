@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.dutybook.Person;
+import com.example.dutybook.R;
 
 import java.util.ArrayList;
 

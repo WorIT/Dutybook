@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.classes;
 
 import java.util.ArrayList;
 

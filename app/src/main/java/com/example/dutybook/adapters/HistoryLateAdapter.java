@@ -1,4 +1,4 @@
-package com.example.dutybook;
+package com.example.dutybook.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,17 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dutybook.HistoryLate;
+import com.example.dutybook.R;
+
 import java.util.ArrayList;
 
 class HistoryLateAdapter extends RecyclerView.Adapter<HistoryLateAdapter.HistoryLateViewHolder> {
-    ArrayList<HistoryLate> HistoryLate;
+    ArrayList<com.example.dutybook.HistoryLate> HistoryLate;
 
-    public HistoryLateAdapter (ArrayList<HistoryLate> personArrayList){
-
-        this.HistoryLate = personArrayList;
-    }
-
-    public class HistoryLateViewHolder extends RecyclerView.ViewHolder{
+    class HistoryLateViewHolder extends RecyclerView.ViewHolder{
         TextView Datelate;
         TextView Timelate;
         public HistoryLateViewHolder(@NonNull View itemView) {
