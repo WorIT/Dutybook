@@ -3,13 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="textPerson">#FFFFFF</color>
 
-
-    <!--colors for modern ui-->
-    <color name="whiteTextColor">#fff</color>
-    <color name="primaryTextColor">#00a5ff</color>
     <color name="loginBkColor">#f0f0f0</color>
-
+    <color name="back">#FFD600</color>
     <!--colros for card-->
     <color name="whiteCardColor">#fff</color>
 

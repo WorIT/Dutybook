@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/back">
 
     <Button
         android:id="@+id/btn_fogotpassword"
@@ -123,12 +123,12 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:theme="@style/CircularProgress"
-        android:visibility="invisible"
         style="@android:style/Widget.Material.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="9dp"
+        android:theme="@style/CircularProgress"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/btn_enter_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
