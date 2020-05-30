@@ -270,6 +270,7 @@ public class EnterActivity extends AppCompatActivity {
             chek_remid.setChecked(true);
             enter_login_et.setText(mSettings.getString(APP_PREFERENCES_LOGIN, ""));
             enter_password_et.setText(mSettings.getString(APP_PREFERENCES_PASSWORD, ""));
+            signin(enter_login_et.getText().toString(),enter_password_et.getText().toString());
 
 
         }
@@ -322,22 +323,6 @@ public class EnterActivity extends AppCompatActivity {
                 gradelist.add("11-5");
                 gradelist.add("11-6");
                 gradelist.add("11-7");
-                //mAuthListener = new FirebaseAuth.AuthStateListener() {
-                //     @Override
-                //     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                //     FirebaseUser user = firebaseAuth.getCurrentUser();
-                //       if (user != null) {
-                //            // добавить приветствие как у сбера
-                //          Intent intent_main = new Intent(EnterActivity.this, MainActivity.class);
-                //          startActivity(intent_main);
-                //      } else {
-                //         Toast toast = Toast.makeText(getApplicationContext(),
-                //                "Вы не вошли", Toast.LENGTH_SHORT);
-                //        toast.show();
-                //     }
-                //  }
-                /// };
-
 
         Button btn_enter_duty = findViewById(R.id.btn_enter_user);
         Button btn_enter_registration = findViewById(R.id.btn_enter_registration);

@@ -18,13 +18,14 @@
         android:elevation="2dp"
         android:foregroundGravity="center"
         android:padding="5dp"
-        app:cardBackgroundColor="#FFF176"
+        app:cardBackgroundColor="#536DFE"
         app:cardElevation="2dp"
         app:cardMaxElevation="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:elevation="6dp">
 
             <TextView
                 android:id="@+id/tvNameSetLate"
@@ -37,7 +38,7 @@
                 android:gravity="start"
                 android:padding="3dp"
                 android:text="Фамилия Имя"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvGradeSetLate"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -55,13 +56,24 @@
                 android:gravity="center"
                 android:padding="3dp"
                 android:text="Класс"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.829"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.551" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="37dp"
+                android:layout_height="25dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvGradeSetLate"
+                app:layout_constraintEnd_toStartOf="@+id/tvGradeSetLate"
+                app:layout_constraintStart_toEndOf="@+id/tvNameSetLate"
+                app:layout_constraintTop_toTopOf="@+id/tvNameSetLate"
+                app:layout_constraintVertical_bias="0.714"
+                app:srcCompat="@drawable/baseline_touch_app_black_18dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
