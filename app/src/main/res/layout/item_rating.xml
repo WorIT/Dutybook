@@ -1,37 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="5dp">
 
-    <TextView
-        android:id="@+id/tvNameRatingPerson"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvsetlate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:layout_weight="2"
-        android:fontFamily="@font/roboto_mono_light"
-        android:gravity="center"
-        android:text="Фамилия Имя"
-        android:textStyle="bold" />
+        android:elevation="2dp"
+        android:foregroundGravity="center"
+        android:padding="5dp"
+        app:cardBackgroundColor="#536DFE"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="20dp">
 
-    <TextView
-        android:id="@+id/tvGradeRatingPerson"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:fontFamily="@font/roboto_mono_light"
-        android:text="Класс"
-        android:textStyle="bold" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:elevation="6dp"
+            android:padding="5dp">
 
-    <TextView
-        android:id="@+id/tvRatingPersonNumdelay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:fontFamily="@font/roboto_mono_light"
-        android:text="numdelay"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvRatingPersonNumdelay"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="3"
+                android:fontFamily="@font/roboto_mono_light"
+                android:gravity="center"
+                android:text="numdelay"
+                android:textColor="#FFD600"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tvGradeRatingPerson"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvGradeRatingPerson"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/tvNameRatingPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:elevation="5dp"
+                android:fontFamily="@font/roboto_mono_light"
+                android:gravity="start"
+                android:padding="3dp"
+                android:text="Фамилия Имя"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvGradeRatingPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="2"
+                android:elevation="5dp"
+                android:fontFamily="@font/roboto_mono_light"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="Класс"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvNameRatingPerson"
+                app:layout_constraintEnd_toStartOf="@+id/tvRatingPersonNumdelay"
+                app:layout_constraintTop_toTopOf="@+id/tvNameRatingPerson"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

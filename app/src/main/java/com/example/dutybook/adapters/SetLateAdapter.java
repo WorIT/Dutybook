@@ -39,8 +39,8 @@ public class SetLateAdapter extends RecyclerView.Adapter<SetLateAdapter.SetLateV
         TextView gradesetlate;
         SetLateViewHolder(@NonNull View itemView) {
             super(itemView);
-            namesetlate = itemView.findViewById(R.id.tvNameSetLate);
-            gradesetlate = itemView.findViewById(R.id.tvGradeSetLate);
+            namesetlate = itemView.findViewById(R.id.tvNameRatingPerson);
+            gradesetlate = itemView.findViewById(R.id.tvGradeRatingPerson);
 
         }
     }

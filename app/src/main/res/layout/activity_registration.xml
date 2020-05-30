@@ -10,7 +10,7 @@
         android:id="@+id/btn_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="72dp"
         android:fontFamily="@font/rubik_light"
         android:text="Зарегестрироваться"
         android:textStyle="bold"

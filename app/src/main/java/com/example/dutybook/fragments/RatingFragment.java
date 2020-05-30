@@ -40,8 +40,8 @@ public class RatingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rating, container, false);
         RecyclerView rv = view.findViewById(R.id.RecV_rating);
-        sp_how = view.findViewById(R.id.sp_how);
-        sp_grade = view.findViewById(R.id.sp_grade);
+            sp_how = view.findViewById(R.id.sp_how);
+            sp_grade = view.findViewById(R.id.sp_grade);
         final RatingAdapter adapter;
         adapter = new RatingAdapter (People);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

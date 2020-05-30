@@ -33,8 +33,8 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
         TextView gradereg;
         RegistrationViewHolder(@NonNull View itemView) {
             super(itemView);
-            namereg = itemView.findViewById(R.id.tvNameRegPerson);
-            gradereg = itemView.findViewById(R.id.tvGradeRegPerson);
+            namereg = itemView.findViewById(R.id.tvNameRatingPerson);
+            gradereg = itemView.findViewById(R.id.tvGradeRatingPerson);
 
         }
     }
